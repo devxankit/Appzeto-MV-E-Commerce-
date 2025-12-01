@@ -10,6 +10,8 @@
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
+    --primary-light: 210 40% 96.1%;
+    --primary-dark: 222.2 47.4% 8%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
@@ -33,6 +35,8 @@
     --popover-foreground: 210 40% 98%;
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-light: 217.2 32.6% 17.5%;
+    --primary-dark: 210 40% 95%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -51,8 +55,18 @@
   * {
     border-color: hsl(var(--border));
   }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+  }
+  #root {
+    width: 100%;
+    min-height: 100vh;
   }
 }
