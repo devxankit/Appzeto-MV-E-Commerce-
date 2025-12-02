@@ -324,7 +324,7 @@ export default function AppHome() {
     <AppLayout>
       <div className="bg-white min-h-screen">
         {/* Search Bar */}
-        <section className="px-4 py-3 bg-white">
+        <section className="px-4 py-2 bg-white">
           <div className="relative flex items-center">
             <Search className="absolute left-3 w-5 h-5 text-gray-400" />
             <input
@@ -342,8 +342,8 @@ export default function AppHome() {
         </section>
 
         {/* Categories */}
-        <section className="px-4 py-4 bg-white">
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+        <section className="px-4 py-2 bg-white">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
             {categories.map((category, index) => (
               <motion.div
                 key={category.id}
@@ -387,8 +387,8 @@ export default function AppHome() {
         </section>
 
         {/* Carousel Banners */}
-        <section className="px-4 py-4 bg-white">
-          <div className="relative h-48 rounded-xl overflow-hidden bg-gradient-to-br from-red-500 via-red-600 to-orange-600 shadow-lg">
+        <section className="px-4 py-2 bg-white">
+          <div className="relative h-40 rounded-xl overflow-hidden bg-gradient-to-br from-red-500 via-red-600 to-orange-600 shadow-lg">
             {/* Fireworks Background Container */}
             <div className="absolute inset-0 z-0 rounded-xl">
               <FireworksBackground
@@ -456,8 +456,8 @@ export default function AppHome() {
         </section>
 
         {/* Brands */}
-        <section className="px-4 py-4 bg-white">
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+        <section className="px-4 py-2 bg-white">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
             {brands.map((brand) => (
               <div
                 key={brand.id}
@@ -479,8 +479,8 @@ export default function AppHome() {
         </section>
 
         {/* Smartphones & Basic Mobiles */}
-        <section className="px-4 py-4 bg-white">
-          <div className="flex items-center justify-between mb-3">
+        <section className="px-4 py-2 bg-white">
+          <div className="flex items-center justify-between mb-2">
             <div>
               <h2 className="text-lg font-bold text-gray-800">
                 Smartphones & Basic Mobiles
@@ -495,7 +495,7 @@ export default function AppHome() {
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
             {smartphoneProducts.slice(0, 5).map((product) => (
               <ProductCard
                 key={product.id}
@@ -507,8 +507,8 @@ export default function AppHome() {
         </section>
 
          {/* Products On Sale - Horizontal Scroll */}
-         <section className="px-4 py-4 bg-white">
-           <div className="flex items-center justify-between mb-3">
+         <section className="px-4 py-2 bg-white">
+           <div className="flex items-center justify-between mb-2">
              <div>
                <h2 className="text-lg font-bold text-gray-800">
                  Products On Sale
@@ -523,7 +523,7 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
              {saleProducts.slice(0, 6).map((product) => (
                <ProductCard
                  key={product.id}
@@ -536,7 +536,7 @@ export default function AppHome() {
          </section>
 
          {/* Spotlight's on Section - Middle of page */}
-         <section className="px-4 py-4">
+         <section className="px-4 py-2">
            <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 shadow-lg">
              {/* Fireworks Background Container */}
              <div className="absolute inset-0 z-0 rounded-xl">
@@ -555,26 +555,26 @@ export default function AppHome() {
              <div className="absolute inset-0 rounded-xl border-2 border-white/20 pointer-events-none z-10" />
 
              {/* Content Container */}
-             <div className="relative z-10 p-4">
-               <h2 className="text-xl font-bold text-white mb-4">Spotlight's on</h2>
-               <div className="grid grid-cols-2 gap-3">
+             <div className="relative z-10 p-3">
+               <h2 className="text-lg font-bold text-white mb-2">Spotlight's on</h2>
+               <div className="grid grid-cols-2 gap-2">
                  {spotlightItems.map((item) => (
                    <div
                      key={item.id}
                      className="bg-white rounded-lg overflow-hidden shadow-md"
                    >
-                     <div className="relative h-40 bg-gray-100">
+                     <div className="relative h-32 bg-gray-100">
                        <img
                          src={item.image}
                          alt={item.title}
                          className="w-full h-full object-cover"
                        />
                      </div>
-                     <div className="p-3">
-                       <h3 className="text-sm font-semibold text-gray-800 mb-1">
+                     <div className="p-2">
+                       <h3 className="text-xs font-semibold text-gray-800 mb-0.5">
                          {item.title}
                        </h3>
-                       <p className="text-sm font-bold text-gray-900">
+                       <p className="text-xs font-bold text-gray-900">
                          {item.offer}
                        </p>
                      </div>
@@ -586,8 +586,8 @@ export default function AppHome() {
          </section>
 
          {/* Trending Products */}
-         <section className="px-4 py-4 bg-white">
-           <div className="flex items-center justify-between mb-3">
+         <section className="px-4 py-2 bg-white">
+           <div className="flex items-center justify-between mb-2">
              <div>
                <h2 className="text-lg font-bold text-gray-800">
                  Trending Now
@@ -602,7 +602,7 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
              {trendingProducts.map((product) => (
                <ProductCard
                  key={product.id}
@@ -615,8 +615,8 @@ export default function AppHome() {
          </section>
 
          {/* Black Friday Promotional Banner */}
-         <section className="px-4 py-4 bg-white">
-           <div className="relative h-48 rounded-lg overflow-hidden">
+         <section className="px-4 py-2 bg-white">
+           <div className="relative h-40 rounded-lg overflow-hidden">
              <div className="absolute inset-0 flex">
                {/* Orange Section */}
                <div className="w-1/2 bg-orange-500 flex flex-col justify-center items-start pl-4 pr-2">
@@ -662,17 +662,17 @@ export default function AppHome() {
          </section>
 
          {/* Sponsored Section - Middle of page */}
-         <section className="px-4 py-4 bg-white">
-           <h2 className="text-lg font-bold text-gray-800 mb-4">Sponsored</h2>
-           <div className="grid grid-cols-2 gap-3">
+         <section className="px-4 py-2 bg-white">
+           <h2 className="text-lg font-bold text-gray-800 mb-2">Sponsored</h2>
+           <div className="grid grid-cols-2 gap-2">
              {sponsoredProducts.map((product) => (
                <div
                  key={product.id}
                  className="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm relative"
                >
-                 <div className="relative h-40 bg-gray-100">
-                   <div className="absolute top-2 left-2 z-10">
-                     <span className="text-xs font-bold text-gray-800 bg-white/90 px-2 py-1 rounded">
+                 <div className="relative h-32 bg-gray-100">
+                   <div className="absolute top-1.5 left-1.5 z-10">
+                     <span className="text-[10px] font-bold text-gray-800 bg-white/90 px-1.5 py-0.5 rounded">
                        {product.brand}
                      </span>
                    </div>
@@ -681,12 +681,12 @@ export default function AppHome() {
                      alt={product.productName}
                      className="w-full h-full object-cover"
                    />
-                   <div className="absolute bottom-0 left-0 right-0 bg-blue-600 text-white px-2 py-1">
-                     <p className="text-xs font-semibold">{product.price}</p>
+                   <div className="absolute bottom-0 left-0 right-0 bg-blue-600 text-white px-1.5 py-0.5">
+                     <p className="text-[10px] font-semibold">{product.price}</p>
                    </div>
                  </div>
-                 <div className="p-2">
-                   <p className="text-xs text-gray-700">{product.productName}</p>
+                 <div className="p-1.5">
+                   <p className="text-xs text-gray-700 line-clamp-2">{product.productName}</p>
                  </div>
                </div>
              ))}
@@ -694,8 +694,8 @@ export default function AppHome() {
          </section>
 
          {/* Top Rated Furniture Products */}
-         <section className="px-4 py-4 bg-white">
-           <div className="flex items-center justify-between mb-3">
+        <section className="px-4 py-2 bg-white">
+          <div className="flex items-center justify-between mb-2">
              <div>
                <h2 className="text-lg font-bold text-gray-800">
                  Top Rated Furniture Products
@@ -710,7 +710,7 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
              {furnitureProducts.length > 0 ? (
                furnitureProducts.map((product) => (
                  <ProductCard
@@ -729,8 +729,8 @@ export default function AppHome() {
          </section>
 
          {/* New Arrivals */}
-         <section className="px-4 py-4 bg-white">
-           <div className="flex items-center justify-between mb-3">
+        <section className="px-4 py-2 bg-white">
+          <div className="flex items-center justify-between mb-2">
              <div>
                <h2 className="text-lg font-bold text-gray-800">
                  New Arrivals
@@ -745,7 +745,7 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="grid grid-cols-2 gap-3">
+           <div className="grid grid-cols-2 gap-2">
              {newArrivals.map((product) => (
                <ProductCard
                  key={product.id}
@@ -758,8 +758,8 @@ export default function AppHome() {
          </section>
 
          {/* Suggested For You Section - Near bottom */}
-         <section className="px-4 py-4 bg-white">
-           <div className="flex items-center justify-between mb-4">
+        <section className="px-4 py-2 bg-white">
+          <div className="flex items-center justify-between mb-2">
              <h2 className="text-lg font-bold text-gray-800">
                Suggested For You
              </h2>
@@ -767,7 +767,7 @@ export default function AppHome() {
                <ArrowRight className="w-5 h-5" />
              </button>
            </div>
-           <div className="grid grid-cols-2 gap-3">
+           <div className="grid grid-cols-2 gap-2">
              {suggestedProducts.map((product) => (
                <SuggestedProductCard
                  key={product.id}
@@ -779,7 +779,7 @@ export default function AppHome() {
          </section>
 
         {/* Bottom padding for bottom nav */}
-        <div className="h-4"></div>
+        <div className="h-2"></div>
       </div>
     </AppLayout>
   );
