@@ -18,6 +18,7 @@ import Terms from './modules/web/web-pages/Terms'
 import ReturnPolicy from './modules/web/web-pages/ReturnPolicy'
 import Shipping from './modules/web/web-pages/Shipping'
 import ScrollToTop from './components/ScrollToTop'
+import AppHome from './modules/User-App/User-App-pages/AppHome'
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         {/* Main Pages */}
-        <Route path="/" element={<WebHome />} />
+        <Route path="/" element={<AppHome />} />
         <Route path="/home" element={<WebHome />} />
         <Route path="/products" element={<Products />} />
         
@@ -73,6 +74,19 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/return-policy" element={<ReturnPolicy />} />
         <Route path="/shipping" element={<Shipping />} />
+        
+        {/* User-App Pages */}
+        <Route path="/app/home" element={<AppHome />} />
+        <Route path="/app/categories" element={<Category />} />
+        <Route path="/app/categories/:categoryName" element={<Category />} />
+        <Route path="/app/cart" element={<Cart />} />
+        <Route path="/app/wishlist" element={<Wishlist />} />
+        <Route path="/app/orders" element={<Orders />} />
+        <Route path="/app/profile" element={<Account />} />
+        <Route path="/app/settings" element={<Account />} />
+        <Route path="/app/support" element={<Support />} />
+        <Route path="/app/explore" element={<Products />} />
+        <Route path="/app/products/sale" element={<Products />} />
         
         {/* App Pages (redirects) */}
         <Route path="/android" element={<Navigate to="/" replace />} />
