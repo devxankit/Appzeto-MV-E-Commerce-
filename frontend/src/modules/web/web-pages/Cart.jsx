@@ -61,7 +61,7 @@ export default function Cart() {
                 <Card key={item.cartId} className="border-0 shadow-md">
                   <CardContent className="p-4">
                     <div className="flex gap-4">
-                      <Link to={`/product/${item.id}`} className="flex-shrink-0">
+                      <Link to={`/product/${item.id}`} className="shrink-0">
                         <div className="w-24 h-24 rounded-lg overflow-hidden bg-muted">
                           <img
                             src={item.image}

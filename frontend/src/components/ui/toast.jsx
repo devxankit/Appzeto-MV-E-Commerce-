@@ -60,7 +60,7 @@ function Toast({ toast, onClose }) {
       )}
     >
       <div className="flex items-center gap-3">
-        {toast.icon && <div className="flex-shrink-0">{toast.icon}</div>}
+        {toast.icon && <div className="shrink-0">{toast.icon}</div>}
         <div className="flex-1">
           {toast.title && (
             <div className="text-sm font-semibold">{toast.title}</div>

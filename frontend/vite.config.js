@@ -13,4 +13,17 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Show all warnings during build
+        warn(warning)
+      },
+    },
+  },
+  server: {
+    hmr: {
+      overlay: true,
+    },
+  },
 })

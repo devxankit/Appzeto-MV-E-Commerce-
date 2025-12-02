@@ -70,7 +70,7 @@ export default function Products() {
 
           <div className="flex gap-6">
             {/* Sidebar Filters */}
-            <div className="hidden lg:block w-64 flex-shrink-0">
+            <div className="hidden lg:block w-64 shrink-0">
               <Card className="border-0 shadow-md">
                 <CardContent className="p-6">
                   <h3 className="font-semibold mb-4 flex items-center gap-2">
@@ -114,7 +114,7 @@ export default function Products() {
                     className="overflow-hidden hover:shadow-lg transition-all duration-300 group border-0 shadow-md"
                   >
                     <Link to={`/product/${product.id}`}>
-                      <div className="relative aspect-[280/200] overflow-hidden bg-muted">
+                      <div className="relative aspect-280/200 overflow-hidden bg-muted">
                         {product.discount && (
                           <Badge
                             variant="destructive"
@@ -199,7 +199,7 @@ export default function Products() {
                     <CardContent className="p-4">
                       <div className="space-y-2">
                         <Link to={`/product/${product.id}`}>
-                          <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-[2.5rem] hover:text-primary transition">
+                          <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-10 hover:text-primary transition">
                             {product.name}
                           </h3>
                         </Link>

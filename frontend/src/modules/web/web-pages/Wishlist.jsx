@@ -79,7 +79,7 @@ export default function Wishlist() {
                 key={product.id}
                 className="overflow-hidden hover:shadow-lg transition-all duration-300 group border-0 shadow-md"
               >
-                <div className="relative aspect-[280/200] overflow-hidden bg-muted">
+                <div className="relative aspect-280/200 overflow-hidden bg-muted">
                   {product.discount && (
                     <Badge
                       variant="destructive"
@@ -105,7 +105,7 @@ export default function Wishlist() {
                 <CardContent className="p-4">
                   <div className="space-y-2">
                     <Link to={`/product/${product.id}`}>
-                      <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-[2.5rem] hover:text-primary transition">
+                      <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-10 hover:text-primary transition">
                         {product.name}
                       </h3>
                     </Link>

@@ -6,7 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "lint:watch": "eslint . --watch --max-warnings=0",
+    "lint:verbose": "eslint . --format=stylish --max-warnings=0",
+    "lint:all": "npm run lint && node scripts/check-tailwind.js",
+    "check:tailwind": "node scripts/check-tailwind.js",
     "preview": "vite preview"
   },
   "dependencies": {

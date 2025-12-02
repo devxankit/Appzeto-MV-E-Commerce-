@@ -907,7 +907,7 @@ export default function Checkout() {
                           <div className="space-y-3">
                             {cartItems.map((item) => (
                               <div key={item.cartId} className="flex gap-4 p-3 border rounded-lg">
-                                <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                                <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted shrink-0">
                                   <img
                                     src={item.image}
                                     alt={item.name}
@@ -1002,7 +1002,7 @@ export default function Checkout() {
                     <div className="space-y-3 mb-4 max-h-[300px] overflow-y-auto">
                       {cartItems.map((item) => (
                         <div key={item.cartId} className="flex gap-3">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted shrink-0">
                             <img
                               src={item.image}
                               alt={item.name}

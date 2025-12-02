@@ -39,7 +39,7 @@ export default function WebNavbar() {
         <div className="max-w-[1296px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[86px] gap-4 sm:gap-8">
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0 flex items-center gap-3">
+            <Link to="/" className="shrink-0 flex items-center gap-3">
               <div className="relative">
                 <div className="w-[50px] h-[50px] bg-primary rounded-lg flex items-center justify-center">
                   <ShoppingBag className="w-7 h-7 text-white" />
