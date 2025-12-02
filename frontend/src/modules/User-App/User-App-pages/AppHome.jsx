@@ -12,56 +12,68 @@ import Autoplay from "embla-carousel-autoplay";
 import { allProducts } from "../../../data/products";
 import { useCart } from "../../../context/CartContext";
 import { useToast } from "@/components/ui/toast";
+import banner1 from "../../../assets/images/banner1.jpg";
+import banner2 from "../../../assets/images/banner2.jpg";
+import banner3 from "../../../assets/images/banner3.jpg";
+import { FireworksBackground } from "@/components/animate-ui/components/backgrounds/fireworks";
 
-// Mock data for categories
+// Mock data for categories with background colors
 const categories = [
   {
     id: 1,
     name: "Furniture",
     image:
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=200&fit=crop",
+    bgColor: "bg-orange-100",
   },
   {
     id: 2,
     name: "Fashion",
     image:
       "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=200&h=200&fit=crop",
+    bgColor: "bg-pink-100",
   },
   {
     id: 3,
     name: "Electronics",
     image:
       "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=200&h=200&fit=crop",
+    bgColor: "bg-blue-100",
   },
   {
     id: 4,
     name: "Digital product",
     image:
       "https://images.unsplash.com/photo-1527814050087-3793815479db?w=200&h=200&fit=crop",
+    bgColor: "bg-purple-100",
   },
   {
     id: 5,
     name: "Home appliance",
     image:
       "https://images.unsplash.com/photo-1556911220-bff31c812dba?w=200&h=200&fit=crop",
+    bgColor: "bg-green-100",
   },
   {
     id: 6,
     name: "Groceries",
     image:
       "https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&h=200&fit=crop",
+    bgColor: "bg-yellow-100",
   },
   {
     id: 7,
     name: "Watches",
     image:
       "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop",
+    bgColor: "bg-indigo-100",
   },
   {
     id: 8,
     name: "Footwear",
     image:
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&h=200&fit=crop",
+    bgColor: "bg-red-100",
   },
 ];
 
@@ -69,22 +81,19 @@ const categories = [
 const banners = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&h=400&fit=crop",
+    image: banner1,
     title: "Special Offer",
     subtitle: "Up to 50% OFF",
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&h=400&fit=crop",
+    image: banner2,
     title: "New Collection",
     subtitle: "Shop Now",
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=400&fit=crop",
+    image: banner3,
     title: "Flash Sale",
     subtitle: "Limited Time",
   },
@@ -334,73 +343,114 @@ export default function AppHome() {
 
         {/* Categories */}
         <section className="px-4 py-4 bg-white">
-          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
-            {categories.map((category) => (
-              <Link
+          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+            {categories.map((category, index) => (
+              <motion.div
                 key={category.id}
-                to={`/app/categories/${category.name.toLowerCase()}`}
-                className="flex flex-col items-center gap-2 min-w-[80px]"
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{
+                  duration: 0.3,
+                  delay: index * 0.05,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="shrink-0"
               >
-                <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 border-2 border-gray-200">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <span className="text-xs text-gray-700 text-center font-medium">
-                  {category.name}
-                </span>
-              </Link>
+                <Link
+                  to={`/app/categories/${category.name.toLowerCase()}`}
+                  className="flex flex-col items-center gap-2 w-20"
+                >
+                  <motion.div
+                    className={`w-16 h-16 rounded-full overflow-hidden ${category.bgColor} border border-gray-200 shadow-sm relative`}
+                    whileHover={{ 
+                      boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    <motion.img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
+                  <span className="text-xs text-gray-700 text-center font-medium w-full truncate">
+                    {category.name}
+                  </span>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </section>
 
         {/* Carousel Banners */}
         <section className="px-4 py-4 bg-white">
-          <div className="relative h-48 rounded-lg overflow-hidden">
-            <Carousel
-              setApi={setApi}
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 4000,
-                }),
-              ]}
-              className="w-full h-full"
-            >
-              <CarouselContent className="h-full">
-                {banners.map((banner) => (
-                  <CarouselItem key={banner.id} className="pl-0 basis-full">
-                    <div className="relative w-full h-full">
-                      <img
-                        src={banner.image}
-                        alt={banner.title}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
+          <div className="relative h-48 rounded-xl overflow-hidden bg-gradient-to-br from-red-500 via-red-600 to-orange-600 shadow-lg">
+            {/* Fireworks Background Container */}
+            <div className="absolute inset-0 z-0 rounded-xl">
+              <FireworksBackground
+                population={2}
+                color={['#FFD700', '#FFA500', '#FF6B6B', '#FF8C00', '#FFE135']}
+                fireworkSpeed={{ min: 3, max: 6 }}
+                fireworkSize={{ min: 2, max: 4 }}
+                particleSpeed={{ min: 1.5, max: 5 }}
+                particleSize={{ min: 1, max: 4 }}
+                className="opacity-70"
+              />
+            </div>
 
-            {/* Carousel Indicators */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-              {banners.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => api?.scrollTo(index)}
-                  className={`transition-all duration-300 rounded-full ${
-                    index === current
-                      ? "w-2 h-2 bg-white"
-                      : "w-1.5 h-1.5 bg-white/50"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+            {/* Container Border Effect */}
+            <div className="absolute inset-0 rounded-xl border-2 border-white/20 pointer-events-none z-10" />
+
+            {/* Carousel with Banner Images */}
+            <div className="relative z-10 w-full h-full">
+              <Carousel
+                setApi={setApi}
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                plugins={[
+                  Autoplay({
+                    delay: 4000,
+                  }),
+                ]}
+                className="w-full h-full"
+              >
+                <CarouselContent className="h-full">
+                  {banners.map((banner) => (
+                    <CarouselItem key={banner.id} className="pl-0 basis-full">
+                      <div className="relative w-full h-full rounded-xl overflow-hidden">
+                        <img
+                          src={banner.image}
+                          alt={banner.title}
+                          className="w-full h-full object-cover rounded-xl opacity-90"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent rounded-xl" />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+
+              {/* Carousel Indicators */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                {banners.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => api?.scrollTo(index)}
+                    className={`transition-all duration-300 rounded-full ${
+                      index === current
+                        ? "w-2.5 h-2.5 bg-white shadow-lg"
+                        : "w-2 h-2 bg-white/60"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -486,31 +536,52 @@ export default function AppHome() {
          </section>
 
          {/* Spotlight's on Section - Middle of page */}
-         <section className="px-4 py-4 bg-orange-500">
-           <h2 className="text-xl font-bold text-white mb-4">Spotlight's on</h2>
-           <div className="grid grid-cols-2 gap-3">
-             {spotlightItems.map((item) => (
-               <div
-                 key={item.id}
-                 className="bg-white rounded-lg overflow-hidden shadow-md"
-               >
-                 <div className="relative h-40 bg-gray-100">
-                   <img
-                     src={item.image}
-                     alt={item.title}
-                     className="w-full h-full object-cover"
-                   />
-                 </div>
-                 <div className="p-3">
-                   <h3 className="text-sm font-semibold text-gray-800 mb-1">
-                     {item.title}
-                   </h3>
-                   <p className="text-sm font-bold text-gray-900">
-                     {item.offer}
-                   </p>
-                 </div>
+         <section className="px-4 py-4">
+           <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 shadow-lg">
+             {/* Fireworks Background Container */}
+             <div className="absolute inset-0 z-0 rounded-xl">
+               <FireworksBackground
+                 population={2}
+                 color={['#FFD700', '#FFA500', '#FF6B6B', '#FF8C00', '#FFE135', '#FFB347']}
+                 fireworkSpeed={{ min: 3, max: 6 }}
+                 fireworkSize={{ min: 2, max: 4 }}
+                 particleSpeed={{ min: 1.5, max: 5 }}
+                 particleSize={{ min: 1, max: 4 }}
+                 className="opacity-60"
+               />
+             </div>
+
+             {/* Container Border Effect */}
+             <div className="absolute inset-0 rounded-xl border-2 border-white/20 pointer-events-none z-10" />
+
+             {/* Content Container */}
+             <div className="relative z-10 p-4">
+               <h2 className="text-xl font-bold text-white mb-4">Spotlight's on</h2>
+               <div className="grid grid-cols-2 gap-3">
+                 {spotlightItems.map((item) => (
+                   <div
+                     key={item.id}
+                     className="bg-white rounded-lg overflow-hidden shadow-md"
+                   >
+                     <div className="relative h-40 bg-gray-100">
+                       <img
+                         src={item.image}
+                         alt={item.title}
+                         className="w-full h-full object-cover"
+                       />
+                     </div>
+                     <div className="p-3">
+                       <h3 className="text-sm font-semibold text-gray-800 mb-1">
+                         {item.title}
+                       </h3>
+                       <p className="text-sm font-bold text-gray-900">
+                         {item.offer}
+                       </p>
+                     </div>
+                   </div>
+                 ))}
                </div>
-             ))}
+             </div>
            </div>
          </section>
 
