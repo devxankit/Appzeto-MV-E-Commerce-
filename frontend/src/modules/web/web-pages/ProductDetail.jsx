@@ -6,8 +6,8 @@ import {
   Shield, RotateCcw, ArrowLeft, StarIcon
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import WebNavbar from "../web-components.jsx/WebNavbar";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebNavbar from "../web-components/WebNavbar";
+import WebFooter from "../web-components/WebFooter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -608,7 +608,7 @@ export default function ProductDetail() {
                         <ul className="space-y-2">
                           {product.about.map((item, index) => (
                             <li key={index} className="flex items-start gap-2">
-                              <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                              <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                               <span className="text-muted-foreground">{item}</span>
                             </li>
                           ))}
@@ -754,7 +754,7 @@ export default function ProductDetail() {
                   className="overflow-hidden hover:shadow-lg transition-all duration-300 group border-0 shadow-md"
                 >
                   <Link to={`/product/${relatedProduct.id}`}>
-                    <div className="relative aspect-[280/200] overflow-hidden bg-muted">
+                    <div className="relative aspect-280/200 overflow-hidden bg-muted">
                       {relatedProduct.discount && (
                         <Badge
                           variant="destructive"
@@ -771,7 +771,7 @@ export default function ProductDetail() {
                     </div>
                     <CardContent className="p-4">
                       <div className="space-y-2">
-                        <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-[2.5rem]">
+                        <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-10">
                           {relatedProduct.name}
                         </h3>
                         <Badge variant="outline" className="text-xs">

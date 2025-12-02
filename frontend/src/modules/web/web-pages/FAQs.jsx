@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import WebNavbar from "../web-components.jsx/WebNavbar";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebNavbar from "../web-components/WebNavbar";
+import WebFooter from "../web-components/WebFooter";
 import { Card, CardContent } from "@/components/ui/card";
 
 const faqs = [

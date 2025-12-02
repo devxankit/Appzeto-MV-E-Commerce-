@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
-import WebNavbar from "../web-components.jsx/WebNavbar";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebNavbar from "../web-components/WebNavbar";
+import WebFooter from "../web-components/WebFooter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

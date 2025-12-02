@@ -6,8 +6,8 @@ import {
   Gift, ArrowRight, ArrowLeft, Info, X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import WebNavbar from "../web-components.jsx/WebNavbar";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebNavbar from "../web-components/WebNavbar";
+import WebFooter from "../web-components/WebFooter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

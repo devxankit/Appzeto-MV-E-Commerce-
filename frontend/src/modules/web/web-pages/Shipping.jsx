@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Truck, Clock, Globe } from "lucide-react";
-import WebNavbar from "../web-components.jsx/WebNavbar";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebNavbar from "../web-components/WebNavbar";
+import WebFooter from "../web-components/WebFooter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Shipping() {

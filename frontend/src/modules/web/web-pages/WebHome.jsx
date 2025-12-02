@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { Star, Heart, ShoppingCart, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import WebNavbar from "../web-components.jsx/WebNavbar";
+import WebNavbar from "../web-components/WebNavbar";
 import { useCart } from "../../../context/CartContext";
 import { useToast } from "@/components/ui/toast";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebFooter from "../web-components/WebFooter";
 import banner1 from "../../../assets/images/banner1.jpg";
 import banner2 from "../../../assets/images/banner2.jpg";
 import banner3 from "../../../assets/images/banner3.jpg";
@@ -87,7 +87,7 @@ export default function WebHome() {
             ]}
             className="w-full h-full"
           >
-            <CarouselContent className="-ml-0 h-full">
+            <CarouselContent className="h-full">
               {banners.map((banner) => (
                 <CarouselItem key={banner.id} className="pl-0 basis-full">
                   <div className="relative w-full h-full">
@@ -131,26 +131,26 @@ export default function WebHome() {
             View More
           </Link>
         </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2.5">
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  to={`/category/${encodeURIComponent(category.name)}`}
-                  className="flex flex-col items-center p-2.5 rounded-lg hover:bg-gray-50 transition group"
-                >
-                  <div className="w-full aspect-[153/120] bg-white rounded-lg p-1.5 mb-2.5 overflow-hidden group-hover:shadow-md transition">
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                  <h3 className="text-sm font-heading font-semibold text-gray-800 text-center leading-tight">
-                    {category.name}
-                  </h3>
-                </Link>
-              ))}
-            </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2.5">
+          {categories.map((category) => (
+            <Link
+              key={category.name}
+              to={`/category/${encodeURIComponent(category.name)}`}
+              className="flex flex-col items-center p-2.5 rounded-lg hover:bg-gray-50 transition group"
+            >
+              <div className="w-full aspect-153/120 bg-white rounded-lg p-1.5 mb-2.5 overflow-hidden group-hover:shadow-md transition">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+              <h3 className="text-sm font-heading font-semibold text-gray-800 text-center leading-tight">
+                {category.name}
+              </h3>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* Brands */}
@@ -169,7 +169,7 @@ export default function WebHome() {
               to={`/brand/${brand.slug}`}
               className="flex flex-col items-center p-2.5 rounded-lg hover:bg-gray-50 transition group"
             >
-              <div className="w-full aspect-[153/100] bg-white rounded-lg p-4 mb-2.5 flex items-center justify-center group-hover:shadow-md transition">
+              <div className="w-full aspect-153/100 bg-white rounded-lg p-4 mb-2.5 flex items-center justify-center group-hover:shadow-md transition">
                 <img
                   src={brand.image}
                   alt={brand.name}
@@ -185,7 +185,7 @@ export default function WebHome() {
       {/* Flash Sale Section */}
       <section className="max-w-[1296px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <Separator className="mb-8" />
-        <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-lg p-6 mb-6">
+        <div className="bg-linear-to-r from-red-500 to-pink-500 rounded-lg p-6 mb-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-white">
               <h2 className="text-3xl font-bold mb-2">⚡ Flash Sale</h2>
@@ -422,34 +422,38 @@ export default function WebHome() {
         <Separator className="mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card className="overflow-hidden border-0 shadow-lg relative group">
-            <img
-              src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&h=400&fit=crop"
-              alt="Electronics Sale"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-              <div className="text-white">
-                <h3 className="text-2xl font-bold mb-2">Electronics Sale</h3>
-                <p className="text-lg mb-3">Up to 50% OFF on all electronics</p>
-                <Button variant="secondary" asChild>
-                  <Link to="/electronics">Shop Now</Link>
-                </Button>
+            <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&h=400&fit=crop"
+                alt="Electronics Sale"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent flex items-end p-6">
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">Electronics Sale</h3>
+                  <p className="text-lg mb-3">Up to 50% OFF on all electronics</p>
+                  <Button variant="secondary" asChild>
+                    <Link to="/electronics">Shop Now</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>
           <Card className="overflow-hidden border-0 shadow-lg relative group">
-            <img
-              src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&h=400&fit=crop"
-              alt="Fashion Week"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-              <div className="text-white">
-                <h3 className="text-2xl font-bold mb-2">Fashion Week</h3>
-                <p className="text-lg mb-3">New collection with 40% discount</p>
-                <Button variant="secondary" asChild>
-                  <Link to="/fashion">Shop Now</Link>
-                </Button>
+            <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&h=400&fit=crop"
+                alt="Fashion Week"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent flex items-end p-6">
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">Fashion Week</h3>
+                  <p className="text-lg mb-3">New collection with 40% discount</p>
+                  <Button variant="secondary" asChild>
+                    <Link to="/fashion">Shop Now</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>
@@ -596,7 +600,7 @@ function ProductCard({ product, size = "default" }) {
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group border-0 shadow-md">
-      <div className="relative aspect-[280/200] overflow-hidden bg-muted">
+      <div className="relative aspect-280/200 overflow-hidden bg-muted">
         {product.discount && (
           <Badge 
             variant="destructive" 
@@ -656,7 +660,7 @@ function ProductCard({ product, size = "default" }) {
       <CardContent className="p-4">
         <div className="space-y-2">
           <Link to={`/product/${product.id}`}>
-            <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-[2.5rem] hover:text-primary transition">
+            <h3 className="font-heading font-semibold text-foreground line-clamp-2 min-h-10 hover:text-primary transition">
               {product.name}
             </h3>
           </Link>
@@ -724,7 +728,7 @@ function HorizontalProductCard({ product }) {
     <Card className="p-3 hover:shadow-lg transition-all duration-300 border-0 shadow-md">
       <Link to={`/product/${product.id}`}>
         <div className="flex items-center gap-3">
-          <div className="relative w-[100px] h-[100px] flex-shrink-0 rounded-lg overflow-hidden bg-muted">
+          <div className="relative w-[100px] h-[100px] shrink-0 rounded-lg overflow-hidden bg-muted">
             {product.discount && (
               <Badge 
                 variant="destructive" 

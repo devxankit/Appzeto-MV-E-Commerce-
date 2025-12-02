@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { User, Mail, Phone, MapPin, Lock, CreditCard, Package } from "lucide-react";
-import WebNavbar from "../web-components.jsx/WebNavbar";
+import WebNavbar from "../web-components/WebNavbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";

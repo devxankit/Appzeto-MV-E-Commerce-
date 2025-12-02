@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import WebNavbar from "../web-components.jsx/WebNavbar";
-import WebFooter from "../web-components.jsx/WebFooter";
+import WebNavbar from "../web-components/WebNavbar";
+import WebFooter from "../web-components/WebFooter";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function ReturnPolicy() {

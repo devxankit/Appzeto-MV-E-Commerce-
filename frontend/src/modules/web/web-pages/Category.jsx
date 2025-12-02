@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Star, Heart, ShoppingCart, Sliders, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import WebNavbar from "../web-components.jsx/WebNavbar";
+import WebNavbar from "../web-components/WebNavbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
