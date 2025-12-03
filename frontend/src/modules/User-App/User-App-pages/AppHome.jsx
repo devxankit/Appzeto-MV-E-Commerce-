@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, Mic, Star, Heart, ChevronRight, ShoppingCart, ArrowRight } from "lucide-react";
+import { Search, Mic, Star, Heart, ChevronRight, ShoppingCart, ArrowRight, MapPin, ChevronDown, Wallet, User, ShoppingBag, Gift, Snowflake, Headphones, Sparkles, Store, Clock, Shirt, Gamepad2, Baby, Car, Utensils, Dumbbell, Watch } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppLayout from "../User-App-components/AppLayout";
 import {
@@ -16,86 +16,113 @@ import banner1 from "../../../assets/images/banner1.jpg";
 import banner2 from "../../../assets/images/banner2.jpg";
 import banner3 from "../../../assets/images/banner3.jpg";
 import { FireworksBackground } from "@/components/animate-ui/components/backgrounds/fireworks";
+import { SnowBackground } from "@/components/animate-ui/components/backgrounds/snow";
+import AnimatedSectionTitle from "@/components/animated/AnimatedSectionTitle";
+import AnimatedCard from "@/components/animated/AnimatedCard";
+import AnimatedBadge from "@/components/animated/AnimatedBadge";
+import ScrollReveal from "@/components/animated/ScrollReveal";
 
-// Mock data for categories with background colors
+// Categories with icons in dark circular backgrounds - Blinkit style
 const categories = [
   {
     id: 1,
-    name: "Furniture",
-    image:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=200&fit=crop",
-    bgColor: "bg-orange-100",
+    name: "All",
+    icon: ShoppingBag,
+    isNew: false,
   },
   {
     id: 2,
-    name: "Fashion",
-    image:
-      "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=200&h=200&fit=crop",
-    bgColor: "bg-pink-100",
+    name: "Wedding",
+    icon: Gift,
+    isNew: false,
   },
   {
     id: 3,
-    name: "Electronics",
-    image:
-      "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=200&h=200&fit=crop",
-    bgColor: "bg-blue-100",
+    name: "Winter",
+    icon: Snowflake,
+    isNew: false,
   },
   {
     id: 4,
-    name: "Digital product",
-    image:
-      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=200&h=200&fit=crop",
-    bgColor: "bg-purple-100",
+    name: "Electronics",
+    icon: Headphones,
+    isNew: false,
   },
   {
     id: 5,
-    name: "Home appliance",
-    image:
-      "https://images.unsplash.com/photo-1556911220-bff31c812dba?w=200&h=200&fit=crop",
-    bgColor: "bg-green-100",
+    name: "Beauty",
+    icon: Sparkles,
+    isNew: false,
   },
   {
     id: 6,
-    name: "Groceries",
-    image:
-      "https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&h=200&fit=crop",
-    bgColor: "bg-yellow-100",
+    name: "Fashion",
+    icon: Shirt,
+    isNew: false,
   },
   {
     id: 7,
-    name: "Watches",
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop",
-    bgColor: "bg-indigo-100",
+    name: "Groceries",
+    icon: ShoppingBag,
+    isNew: false,
   },
   {
     id: 8,
-    name: "Footwear",
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&h=200&fit=crop",
-    bgColor: "bg-red-100",
+    name: "Gaming",
+    icon: Gamepad2,
+    isNew: false,
+  },
+  {
+    id: 9,
+    name: "Baby",
+    icon: Baby,
+    isNew: false,
+  },
+  {
+    id: 10,
+    name: "Automotive",
+    icon: Car,
+    isNew: false,
+  },
+  {
+    id: 11,
+    name: "Food",
+    icon: Utensils,
+    isNew: false,
+  },
+  {
+    id: 12,
+    name: "Fitness",
+    icon: Dumbbell,
+    isNew: false,
+  },
+  {
+    id: 13,
+    name: "Watches",
+    icon: Watch,
+    isNew: false,
   },
 ];
 
-// Mock data for banners
+// Mock data for banners - Warm and inviting
 const banners = [
   {
     id: 1,
     image: banner1,
-    title: "Special Offer",
-    subtitle: "Up to 50% OFF",
+    title: "🎉 Special Offer",
+    subtitle: "Up to 50% OFF on Everything!",
   },
   {
     id: 2,
     image: banner2,
-    title: "New Collection",
-    subtitle: "Shop Now",
+    title: "✨ New Collection",
+    subtitle: "Discover Fresh Arrivals",
   },
   {
     id: 3,
     image: banner3,
-    title: "Flash Sale",
-    subtitle: "Limited Time",
+    title: "⚡ Flash Sale",
+    subtitle: "Limited Time - Grab Now!",
   },
 ];
 
@@ -180,6 +207,18 @@ export default function AppHome() {
   const [current, setCurrent] = useState(0);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const { addToast } = useToast();
+  
+  // Animated placeholder texts (only the changing part)
+  const placeholderTexts = [
+    "'must read books'",
+    "'electronics'",
+    "'fashion trends'",
+    "'home decor'",
+    "'gaming accessories'",
+    "'beauty products'",
+  ];
+  const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
 
   // Get smartphone products
   const smartphoneProducts = allProducts.filter(
@@ -285,6 +324,11 @@ export default function AppHome() {
     .filter((p) => p.rating && p.rating >= 4)
     .slice(0, 6);
 
+  // Get featured products for compact scrollable list
+  const featuredProducts = allProducts
+    .filter((p) => p.rating && p.rating >= 3.5)
+    .slice(0, 12);
+
   useEffect(() => {
     if (!api) {
       return;
@@ -296,6 +340,15 @@ export default function AppHome() {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
+
+  // Animate placeholder text every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [placeholderTexts.length]);
 
   const handleWishlistToggle = (product, e) => {
     e.preventDefault();
@@ -323,88 +376,189 @@ export default function AppHome() {
   return (
     <AppLayout>
       <div className="bg-white min-h-screen">
-        {/* Search Bar */}
-        <section className="px-4 py-2 bg-white">
-          <div className="relative flex items-center">
-            <Search className="absolute left-3 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search items here"
-              className="w-full pl-10 pr-12 py-3 bg-gray-100 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+        {/* Hero Section - Extended gradient background from top to promotional banner */}
+        <div className="bg-gradient-to-br from-orange-300 via-orange-200 to-orange-300 relative overflow-hidden">
+          {/* Falling Snow Background */}
+          <div className="absolute inset-0 z-0">
+            <SnowBackground
+              count={80}
+              speed={{ min: 0.2, max: 0.8 }}
+              size={{ min: 2, max: 5 }}
+              opacity={{ min: 0.4, max: 0.9 }}
+              className="opacity-60"
             />
-            <button
-              className="absolute right-3 p-2 hover:bg-gray-200 rounded-lg transition-colors"
-              aria-label="Voice search"
-            >
-              <Mic className="w-5 h-5 text-gray-600" />
-            </button>
           </div>
-        </section>
+          
+          {/* Subtle animated background effects */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+            <motion.div
+              className="absolute top-10 right-10 w-32 h-32 bg-orange-300/20 rounded-full blur-2xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.2, 0.3, 0.2],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="absolute bottom-10 left-10 w-40 h-40 bg-orange-200/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.15, 0.25, 0.15],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2,
+              }}
+            />
+          </div>
 
-        {/* Categories */}
-        <section className="px-4 py-2 bg-white">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.05,
-                  type: "spring",
-                  stiffness: 100,
-                }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className="shrink-0"
-              >
-                <Link
-                  to={`/app/categories/${category.name.toLowerCase()}`}
-                  className="flex flex-col items-center gap-2 w-20"
+          <div className="relative z-10">
+            {/* Top Section: Tagline & Location */}
+            <section className="px-4 pt-3 pb-2">
+              <div className="flex items-center justify-between mb-2">
+                <motion.h2
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-base font-bold text-gray-900"
                 >
-                  <motion.div
-                    className={`w-16 h-16 rounded-full overflow-hidden ${category.bgColor} border border-gray-200 shadow-sm relative`}
-                    whileHover={{ 
-                      boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
-                    }}
-                  >
-                    <motion.img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
+                  Shop Smart, Shop Fast - Your Store, Your Style
+                </motion.h2>
+              </div>
+              <div className="flex items-center gap-1 mb-3">
+                <MapPin className="w-4 h-4 text-gray-700" />
+                <span className="text-xs font-medium text-gray-800">Ward 40, Indore Division</span>
+                <ChevronDown className="w-4 h-4 text-gray-700" />
+              </div>
+            </section>
+
+            {/* Search Bar - Dark grey Blinkit style */}
+            <section className="px-4 pb-3">
+              <div className="flex items-center gap-2">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative flex-1"
+                >
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+                    <Search className="w-5 h-5 text-gray-500" />
+                  </div>
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      className="w-full pl-10 pr-12 py-2.5 bg-gray-700 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm font-medium text-white placeholder:text-transparent"
                     />
-                  </motion.div>
-                  <span className="text-xs text-gray-700 text-center font-medium w-full truncate">
-                    {category.name}
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
+                    {/* Animated placeholder overlay - only show when input is empty */}
+                    {!searchValue && (
+                      <div className="absolute left-10 top-1/2 -translate-y-1/2 pointer-events-none flex items-center gap-1 overflow-hidden">
+                        <span className="text-sm font-medium text-gray-400">Search</span>
+                        <AnimatePresence mode="wait">
+                          <motion.span
+                            key={currentPlaceholderIndex}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.4, ease: "easeInOut" }}
+                            className="text-sm font-medium text-gray-400 whitespace-nowrap"
+                          >
+                            {placeholderTexts[currentPlaceholderIndex]}
+                          </motion.span>
+                        </AnimatePresence>
+                      </div>
+                    )}
+                  </div>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-gray-600 rounded transition-colors"
+                    aria-label="Voice search"
+                  >
+                    <Mic className="w-4 h-4 text-gray-300" />
+                  </motion.button>
+                </motion.div>
+                
+                {/* Wallet Icon */}
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  className="p-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors"
+                  aria-label="Wallet"
+                >
+                  <Wallet className="w-5 h-5 text-white" />
+                </motion.button>
+                
+                {/* Profile Icon */}
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                  aria-label="Profile"
+                >
+                  <User className="w-5 h-5 text-white" />
+                </motion.button>
+              </div>
+            </section>
+
+            {/* Categories - Icons in dark circular backgrounds */}
+            <section className="pb-4">
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+                {categories.map((category, index) => {
+                  const IconComponent = category.icon;
+                  return (
+                    <motion.div
+                      key={category.id}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.2,
+                        delay: index * 0.05,
+                        type: "spring",
+                        stiffness: 150,
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`shrink-0 relative ${index === 0 ? 'pl-4' : ''} ${index === categories.length - 1 ? 'pr-4' : ''}`}
+                    >
+                      <Link
+                        to={`/app/categories/${category.name.toLowerCase()}`}
+                        className="flex flex-col items-center gap-1.5 w-16"
+                      >
+                        <div className="relative">
+                          <motion.div
+                            className="w-12 h-12 rounded-full bg-gray-700 shadow-md flex items-center justify-center"
+                            whileHover={{ 
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                            }}
+                          >
+                            <IconComponent className="w-6 h-6 text-white" />
+                          </motion.div>
+                          {/* New badge */}
+                          {category.isNew && (
+                            <div className="absolute -top-1 -right-1 bg-red-500 rounded-full px-1.5 py-0.5">
+                              <span className="text-[8px] font-bold text-white">New</span>
+                            </div>
+                          )}
+                        </div>
+                        <span className="text-[10px] text-gray-900 text-center font-semibold w-full truncate leading-tight">
+                          {category.name}
+                        </span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </section>
           </div>
-        </section>
 
-        {/* Carousel Banners */}
-        <section className="px-4 py-2 bg-white">
-          <div className="relative h-40 rounded-xl overflow-hidden bg-gradient-to-br from-red-500 via-red-600 to-orange-600 shadow-lg">
-            {/* Fireworks Background Container */}
-            <div className="absolute inset-0 z-0 rounded-xl">
-              <FireworksBackground
-                population={2}
-                color={['#FFD700', '#FFA500', '#FF6B6B', '#FF8C00', '#FFE135']}
-                fireworkSpeed={{ min: 3, max: 6 }}
-                fireworkSize={{ min: 2, max: 4 }}
-                particleSpeed={{ min: 1.5, max: 5 }}
-                particleSize={{ min: 1, max: 4 }}
-                className="opacity-70"
-              />
-            </div>
-
-            {/* Container Border Effect */}
-            <div className="absolute inset-0 rounded-xl border-2 border-white/20 pointer-events-none z-10" />
-
+          {/* Carousel Banners - Blinkit style with warm colors */}
+          <section className="py-3 px-4">
+          <div className="relative h-40 rounded-xl overflow-hidden bg-white/20 backdrop-blur-sm shadow-lg border border-white/30">
             {/* Carousel with Banner Images */}
             <div className="relative z-10 w-full h-full">
               <Carousel
@@ -427,7 +581,7 @@ export default function AppHome() {
                         <img
                           src={banner.image}
                           alt={banner.title}
-                          className="w-full h-full object-cover rounded-xl opacity-90"
+                          className="w-full h-full object-cover rounded-xl"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent rounded-xl" />
                       </div>
@@ -437,15 +591,15 @@ export default function AppHome() {
               </Carousel>
 
               {/* Carousel Indicators */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
                 {banners.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => api?.scrollTo(index)}
                     className={`transition-all duration-300 rounded-full ${
                       index === current
-                        ? "w-2.5 h-2.5 bg-white shadow-lg"
-                        : "w-2 h-2 bg-white/60"
+                        ? "w-1.5 h-1.5 bg-white shadow-md"
+                        : "w-1 h-1 bg-white/60"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -453,40 +607,216 @@ export default function AppHome() {
               </div>
             </div>
           </div>
-        </section>
+          </section>
+        </div>
 
-        {/* Brands */}
-        <section className="px-4 py-2 bg-white">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-            {brands.map((brand) => (
-              <div
-                key={brand.id}
-                className="shrink-0 flex flex-col items-center gap-2"
-              >
-                <div className="w-24 h-24 bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <img
-                    src={brand.image}
-                    alt={brand.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <span className="text-xs text-gray-700 text-center font-medium max-w-[96px]">
-                  {brand.name}
-                </span>
-              </div>
-            ))}
+        {/* Brands & Promotional Banner Section with Subtle Gradient Background */}
+        <div className="relative bg-gradient-to-b from-orange-50 via-orange-50/50 to-white overflow-hidden">
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <motion.div
+              className="absolute top-10 left-10 w-40 h-40 bg-orange-200/20 rounded-full blur-3xl"
+              animate={{
+                x: [0, 30, 0],
+                y: [0, 20, 0],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="absolute top-32 right-20 w-32 h-32 bg-orange-300/15 rounded-full blur-2xl"
+              animate={{
+                x: [0, -20, 0],
+                y: [0, 30, 0],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 left-1/4 w-36 h-36 bg-yellow-200/15 rounded-full blur-3xl"
+              animate={{
+                x: [0, 25, 0],
+                y: [0, -15, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2,
+              }}
+            />
           </div>
-        </section>
+
+          <div className="relative z-10">
+            {/* Featured Products - Compact Scrollable List */}
+            <section className="py-4">
+              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
+                {featuredProducts.map((product, index) => {
+                  const formatPrice = (price) => {
+                    const numPrice = parseFloat(price);
+                    if (numPrice >= 1000) {
+                      return `₹${numPrice.toLocaleString("en-IN")}`;
+                    }
+                    return `₹${price}`;
+                  };
+
+                  return (
+                    <Link
+                      key={product.id}
+                      to={`/app/product/${product.id}`}
+                      className={`shrink-0 flex flex-col gap-1.5 cursor-pointer group ${index === 0 ? 'pl-4' : ''} ${index === featuredProducts.length - 1 ? 'pr-4' : ''}`}
+                    >
+                      <div className="relative w-28 h-28 bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:scale-105">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover p-2"
+                        />
+                        {product.discount && (
+                          <div className="absolute top-1 left-1 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
+                            {product.discount}% OFF
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-0.5 max-w-[112px]">
+                        <h3 className="text-xs font-semibold text-gray-900 line-clamp-2 leading-tight group-hover:text-orange-600 transition-colors">
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-sm font-bold text-gray-900">
+                            {formatPrice(product.price)}
+                          </span>
+                          {product.originalPrice && product.originalPrice !== product.price && (
+                            <span className="text-[10px] text-gray-500 line-through">
+                              {formatPrice(product.originalPrice)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Large Promotional Banner - GOLDEN WEEK */}
+            <section className="px-4 pt-2 pb-6">
+              <div className="relative h-60 rounded-3xl overflow-hidden bg-gradient-to-br from-orange-300 via-orange-400 to-orange-500 shadow-2xl">
+                {/* Elegant decorative overlays - Static */}
+                <div className="absolute inset-0">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-56 h-56 bg-orange-200/20 rounded-full blur-3xl"></div>
+                  <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-yellow-200/15 rounded-full blur-2xl"></div>
+                </div>
+
+                {/* Product Image - Elegant placement on the right */}
+                <div className="absolute right-0 bottom-0 w-36 h-full">
+                  <div className="relative w-full h-full">
+                    {/* Red background panel */}
+                    <div className="absolute right-0 bottom-0 w-32 h-44 bg-red-600 rounded-tl-3xl rounded-br-3xl shadow-2xl"></div>
+                    {/* Product image */}
+                    <div className="absolute right-2 bottom-4 w-28 h-36">
+                      <img
+                        src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=300&h=400&fit=crop"
+                        alt="Nike Running Shoe"
+                        className="w-full h-full object-contain drop-shadow-2xl"
+                      />
+                      {/* Glow effect */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent pointer-events-none rounded-xl"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content - Enhanced Typography */}
+                <div className="relative z-10 h-full p-6 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <p className="text-gray-900 text-xs font-extrabold uppercase tracking-[0.15em] leading-none">
+                      APPZETO MV
+                    </p>
+                    <h1 
+                      className="text-white text-3xl font-black leading-[1.1] tracking-tight"
+                      style={{ 
+                        textShadow: '3px 3px 12px rgba(0,0,0,0.4), 0 0 20px rgba(0,0,0,0.2)',
+                        letterSpacing: '-0.02em'
+                      }}
+                    >
+                      GOLDEN WEEK
+                    </h1>
+                    <p 
+                      className="text-white text-lg font-extrabold leading-tight"
+                      style={{ 
+                        textShadow: '2px 2px 8px rgba(0,0,0,0.35), 0 0 15px rgba(0,0,0,0.15)',
+                        letterSpacing: '-0.01em'
+                      }}
+                    >
+                      EXPLOSIVE HOT DEALS
+                    </p>
+                    <p className="text-gray-900 text-xs font-bold mt-2 tracking-wide">
+                      Scan code for exclusive offers
+                    </p>
+                  </div>
+
+                  {/* Discount Badge - Simple & Clean */}
+                  <div className="flex items-end justify-between">
+                    <div className="bg-gray-900/95 backdrop-blur-sm px-4 py-2 rounded-xl shadow-2xl border border-gray-800/50">
+                      <span 
+                        className="text-white text-2xl font-black block leading-none"
+                        style={{ letterSpacing: '-0.03em' }}
+                      >
+                        70%
+                      </span>
+                      <span className="text-white text-xs font-extrabold block mt-1 tracking-[0.2em] uppercase">
+                        OFF
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Brands */}
+            <section className="py-4">
+              <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-1">
+                {brands.map((brand, index) => (
+                  <div
+                    key={brand.id}
+                    className={`shrink-0 flex flex-col items-center gap-1.5 cursor-pointer group ${index === 0 ? 'pl-4' : ''} ${index === brands.length - 1 ? 'pr-4' : ''}`}
+                  >
+                    <div className="w-20 h-20 overflow-hidden rounded-xl transition-all duration-300 hover:scale-110 hover:-translate-y-1">
+                      <img
+                        src={brand.image}
+                        alt={brand.name}
+                        className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300 rounded-xl"
+                      />
+                    </div>
+                    <span className="text-[10px] text-gray-700 text-center font-semibold max-w-[80px] leading-tight group-hover:text-gray-900 transition-colors">
+                      {brand.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        </div>
 
         {/* Smartphones & Basic Mobiles */}
-        <section className="px-4 py-2 bg-white">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <h2 className="text-lg font-bold text-gray-800">
-                Smartphones & Basic Mobiles
-              </h2>
-              <p className="text-xs text-gray-500">Top deals on smartphones</p>
-            </div>
+        <ScrollReveal>
+          <section className="px-4 py-2 bg-white">
+            <div className="flex items-center justify-between mb-2">
+              <AnimatedSectionTitle 
+                title="Smartphones & Basic Mobiles"
+                subtitle="Top deals on smartphones"
+              />
             <Link
               to="/app/categories/smartphone"
               className="text-sm text-red-600 font-medium flex items-center gap-1"
@@ -495,26 +825,27 @@ export default function AppHome() {
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-            {smartphoneProducts.slice(0, 5).map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onWishlistToggle={handleWishlistToggle}
-              />
-            ))}
-          </div>
-        </section>
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              {smartphoneProducts.slice(0, 5).map((product, index) => (
+                <AnimatedCard key={product.id} delay={index * 0.1} className="shrink-0">
+                  <ProductCard
+                    product={product}
+                    onWishlistToggle={handleWishlistToggle}
+                  />
+                </AnimatedCard>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
 
          {/* Products On Sale - Horizontal Scroll */}
-         <section className="px-4 py-2 bg-white">
-           <div className="flex items-center justify-between mb-2">
-             <div>
-               <h2 className="text-lg font-bold text-gray-800">
-                 Products On Sale
-               </h2>
-               <p className="text-xs text-gray-500">Products On Sale</p>
-             </div>
+         <ScrollReveal>
+           <section className="px-4 py-2 bg-white">
+             <div className="flex items-center justify-between mb-2">
+               <AnimatedSectionTitle 
+                 title="Products On Sale"
+                 subtitle="Products On Sale"
+               />
              <Link
                to="/app/products/sale"
                className="text-sm text-red-600 font-medium flex items-center gap-1"
@@ -523,26 +854,29 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-             {saleProducts.slice(0, 6).map((product) => (
-               <ProductCard
-                 key={product.id}
-                 product={product}
-                 onWishlistToggle={handleWishlistToggle}
-                 variant="horizontal"
-               />
-             ))}
-           </div>
-         </section>
+             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+               {saleProducts.slice(0, 6).map((product, index) => (
+                 <AnimatedCard key={product.id} delay={index * 0.1} className="shrink-0">
+                   <ProductCard
+                     product={product}
+                     onWishlistToggle={handleWishlistToggle}
+                     variant="horizontal"
+                   />
+                 </AnimatedCard>
+               ))}
+             </div>
+           </section>
+         </ScrollReveal>
 
          {/* Spotlight's on Section - Middle of page */}
-         <section className="px-4 py-2">
-           <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 shadow-lg">
+         <ScrollReveal>
+           <section className="px-4 py-2">
+             <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 shadow-lg">
              {/* Fireworks Background Container */}
              <div className="absolute inset-0 z-0 rounded-xl">
                <FireworksBackground
                  population={2}
-                 color={['#FFD700', '#FFA500', '#FF6B6B', '#FF8C00', '#FFE135', '#FFB347']}
+                 color={['#00D4FF', '#00BFFF', '#1E90FF', '#00CED1', '#40E0D0', '#00FFFF']}
                  fireworkSpeed={{ min: 3, max: 6 }}
                  fireworkSize={{ min: 2, max: 4 }}
                  particleSpeed={{ min: 1.5, max: 5 }}
@@ -558,11 +892,9 @@ export default function AppHome() {
              <div className="relative z-10 p-3">
                <h2 className="text-lg font-bold text-white mb-2">Spotlight's on</h2>
                <div className="grid grid-cols-2 gap-2">
-                 {spotlightItems.map((item) => (
-                   <div
-                     key={item.id}
-                     className="bg-white rounded-lg overflow-hidden shadow-md"
-                   >
+                 {spotlightItems.map((item, index) => (
+                   <AnimatedCard key={item.id} delay={index * 0.1}>
+                     <div className="bg-white rounded-lg overflow-hidden shadow-md">
                      <div className="relative h-32 bg-gray-100">
                        <img
                          src={item.image}
@@ -579,21 +911,22 @@ export default function AppHome() {
                        </p>
                      </div>
                    </div>
+                   </AnimatedCard>
                  ))}
                </div>
              </div>
            </div>
          </section>
+         </ScrollReveal>
 
          {/* Trending Products */}
-         <section className="px-4 py-2 bg-white">
-           <div className="flex items-center justify-between mb-2">
-             <div>
-               <h2 className="text-lg font-bold text-gray-800">
-                 Trending Now
-               </h2>
-               <p className="text-xs text-gray-500">Popular this week</p>
-             </div>
+         <ScrollReveal>
+           <section className="px-4 py-2 bg-white">
+             <div className="flex items-center justify-between mb-2">
+               <AnimatedSectionTitle 
+                 title="Trending Now"
+                 subtitle="Popular this week"
+               />
              <Link
                to="/app/products/trending"
                className="text-sm text-red-600 font-medium flex items-center gap-1"
@@ -602,17 +935,19 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-             {trendingProducts.map((product) => (
-               <ProductCard
-                 key={product.id}
-                 product={product}
-                 onWishlistToggle={handleWishlistToggle}
-                 variant="horizontal"
-               />
-             ))}
-           </div>
-         </section>
+             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+               {trendingProducts.map((product, index) => (
+                 <AnimatedCard key={product.id} delay={index * 0.1} className="shrink-0">
+                   <ProductCard
+                     product={product}
+                     onWishlistToggle={handleWishlistToggle}
+                     variant="horizontal"
+                   />
+                 </AnimatedCard>
+               ))}
+             </div>
+           </section>
+         </ScrollReveal>
 
          {/* Black Friday Promotional Banner */}
          <section className="px-4 py-2 bg-white">
@@ -662,14 +997,13 @@ export default function AppHome() {
          </section>
 
          {/* Sponsored Section - Middle of page */}
-         <section className="px-4 py-2 bg-white">
-           <h2 className="text-lg font-bold text-gray-800 mb-2">Sponsored</h2>
-           <div className="grid grid-cols-2 gap-2">
-             {sponsoredProducts.map((product) => (
-               <div
-                 key={product.id}
-                 className="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm relative"
-               >
+         <ScrollReveal>
+           <section className="px-4 py-2 bg-white">
+             <AnimatedSectionTitle title="Sponsored" className="mb-2" />
+             <div className="grid grid-cols-2 gap-2">
+               {sponsoredProducts.map((product, index) => (
+                 <AnimatedCard key={product.id} delay={index * 0.1}>
+                   <div className="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm relative">
                  <div className="relative h-32 bg-gray-100">
                    <div className="absolute top-1.5 left-1.5 z-10">
                      <span className="text-[10px] font-bold text-gray-800 bg-white/90 px-1.5 py-0.5 rounded">
@@ -688,20 +1022,21 @@ export default function AppHome() {
                  <div className="p-1.5">
                    <p className="text-xs text-gray-700 line-clamp-2">{product.productName}</p>
                  </div>
-               </div>
-             ))}
-           </div>
-         </section>
+                   </div>
+                 </AnimatedCard>
+               ))}
+             </div>
+           </section>
+         </ScrollReveal>
 
          {/* Top Rated Furniture Products */}
-        <section className="px-4 py-2 bg-white">
-          <div className="flex items-center justify-between mb-2">
-             <div>
-               <h2 className="text-lg font-bold text-gray-800">
-                 Top Rated Furniture Products
-               </h2>
-               <p className="text-xs text-gray-500">Top Rated Products</p>
-             </div>
+        <ScrollReveal>
+          <section className="px-4 py-2 bg-white">
+            <div className="flex items-center justify-between mb-2">
+              <AnimatedSectionTitle 
+                title="Top Rated Furniture Products"
+                subtitle="Top Rated Products"
+              />
              <Link
                to="/app/categories/furniture"
                className="text-sm text-red-600 font-medium flex items-center gap-1"
@@ -710,33 +1045,34 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-             {furnitureProducts.length > 0 ? (
-               furnitureProducts.map((product) => (
-                 <ProductCard
-                   key={product.id}
-                   product={product}
-                   onWishlistToggle={handleWishlistToggle}
-                   variant="horizontal"
-                 />
-               ))
-             ) : (
-               <div className="text-gray-500 text-sm py-8">
-                 No furniture products available
-               </div>
-             )}
-           </div>
-         </section>
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              {furnitureProducts.length > 0 ? (
+                furnitureProducts.map((product, index) => (
+                  <AnimatedCard key={product.id} delay={index * 0.1} className="shrink-0">
+                    <ProductCard
+                      product={product}
+                      onWishlistToggle={handleWishlistToggle}
+                      variant="horizontal"
+                    />
+                  </AnimatedCard>
+                ))
+              ) : (
+                <div className="text-gray-500 text-sm py-8">
+                  No furniture products available
+                </div>
+              )}
+            </div>
+          </section>
+        </ScrollReveal>
 
          {/* New Arrivals */}
-        <section className="px-4 py-2 bg-white">
-          <div className="flex items-center justify-between mb-2">
-             <div>
-               <h2 className="text-lg font-bold text-gray-800">
-                 New Arrivals
-               </h2>
-               <p className="text-xs text-gray-500">Just added to store</p>
-             </div>
+        <ScrollReveal>
+          <section className="px-4 py-2 bg-white">
+            <div className="flex items-center justify-between mb-2">
+              <AnimatedSectionTitle 
+                title="New Arrivals"
+                subtitle="Just added to store"
+              />
              <Link
                to="/app/products/new"
                className="text-sm text-red-600 font-medium flex items-center gap-1"
@@ -745,38 +1081,41 @@ export default function AppHome() {
                <ChevronRight className="w-4 h-4" />
              </Link>
            </div>
-           <div className="grid grid-cols-2 gap-2">
-             {newArrivals.map((product) => (
-               <ProductCard
-                 key={product.id}
-                 product={product}
-                 onWishlistToggle={handleWishlistToggle}
-                 variant="grid"
-               />
-             ))}
-           </div>
-         </section>
+            <div className="grid grid-cols-2 gap-2">
+              {newArrivals.map((product, index) => (
+                <AnimatedCard key={product.id} delay={index * 0.1}>
+                  <ProductCard
+                    product={product}
+                    onWishlistToggle={handleWishlistToggle}
+                    variant="grid"
+                  />
+                </AnimatedCard>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
 
          {/* Suggested For You Section - Near bottom */}
-        <section className="px-4 py-2 bg-white">
-          <div className="flex items-center justify-between mb-2">
-             <h2 className="text-lg font-bold text-gray-800">
-               Suggested For You
-             </h2>
+        <ScrollReveal>
+          <section className="px-4 py-2 bg-white">
+            <div className="flex items-center justify-between mb-2">
+              <AnimatedSectionTitle title="Suggested For You" />
              <button className="text-gray-600">
                <ArrowRight className="w-5 h-5" />
              </button>
            </div>
-           <div className="grid grid-cols-2 gap-2">
-             {suggestedProducts.map((product) => (
-               <SuggestedProductCard
-                 key={product.id}
-                 product={product}
-                 onWishlistToggle={handleWishlistToggle}
-               />
-             ))}
-           </div>
-         </section>
+            <div className="grid grid-cols-2 gap-2">
+              {suggestedProducts.map((product, index) => (
+                <AnimatedCard key={product.id} delay={index * 0.1}>
+                  <SuggestedProductCard
+                    product={product}
+                    onWishlistToggle={handleWishlistToggle}
+                  />
+                </AnimatedCard>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
 
         {/* Bottom padding for bottom nav */}
         <div className="h-2"></div>
@@ -806,8 +1145,10 @@ function ProductCard({ product, onWishlistToggle, variant = "horizontal" }) {
       >
         <div className="relative aspect-square bg-gray-100">
           {product.discount && (
-            <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
-              {product.discount}%
+            <div className="absolute top-2 left-2 z-20">
+              <AnimatedBadge variant="discount">
+                {product.discount}%
+              </AnimatedBadge>
             </div>
           )}
           <button
@@ -824,9 +1165,9 @@ function ProductCard({ product, onWishlistToggle, variant = "horizontal" }) {
           </button>
           {/* Rating badge on image */}
           {(product.rating || product.reviews) && (
-            <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm rounded px-2 py-1 flex items-center gap-1 z-10">
-              <Star className="w-3 h-3 fill-white text-white" />
-              <span className="text-white text-xs font-medium">
+            <div className="absolute bottom-1.5 right-1.5 bg-black/70 backdrop-blur-sm rounded px-1.5 py-0.5 flex items-center gap-0.5 z-10">
+              <Star className="w-2.5 h-2.5 fill-white text-white" />
+              <span className="text-white text-[10px] font-medium">
                 {product.rating || 0}.00 | {product.reviews || 0}
               </span>
             </div>
@@ -864,8 +1205,10 @@ function ProductCard({ product, onWishlistToggle, variant = "horizontal" }) {
     >
       <div className="relative aspect-square bg-gray-100">
         {product.discount && (
-          <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
-            {product.discount}%
+          <div className="absolute top-2 left-2 z-20">
+            <AnimatedBadge variant="discount">
+              {product.discount}%
+            </AnimatedBadge>
           </div>
         )}
         <button
