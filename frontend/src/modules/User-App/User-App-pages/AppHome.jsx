@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, Mic, Star, Heart, ChevronRight, ShoppingCart, ArrowRight, MapPin, ChevronDown, Wallet, User, ShoppingBag, Gift, Snowflake, Headphones, Sparkles, Store, Clock, Shirt, Gamepad2, Baby, Car, Utensils, Dumbbell, Watch } from "lucide-react";
+import { Search, Mic, Star, Heart, ChevronRight, ShoppingCart, ArrowRight, MapPin, ChevronDown, ShoppingBag, Gift, Snowflake, Headphones, Sparkles, Store, Clock, Shirt, Gamepad2, Baby, Car, Utensils, Dumbbell, Watch } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppLayout from "../User-App-components/AppLayout";
 import {
@@ -440,74 +440,54 @@ export default function AppHome() {
 
             {/* Search Bar - Dark grey Blinkit style */}
             <section className="px-4 pb-3">
-              <div className="flex items-center gap-2">
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative flex-1"
-                >
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                    <Search className="w-5 h-5 text-gray-500" />
-                  </div>
-                  <div className="relative w-full">
-                    <input
-                      type="text"
-                      value={searchValue}
-                      onChange={(e) => setSearchValue(e.target.value)}
-                      className="w-full pl-10 pr-12 py-2.5 bg-gray-700 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm font-medium text-white placeholder:text-transparent"
-                    />
-                    {/* Animated placeholder overlay - only show when input is empty */}
-                    {!searchValue && (
-                      <div className="absolute left-10 top-1/2 -translate-y-1/2 pointer-events-none flex items-center gap-1 overflow-hidden">
-                        <span className="text-sm font-medium text-gray-400">Search</span>
-                        <AnimatePresence mode="wait">
-                          <motion.span
-                            key={currentPlaceholderIndex}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.4, ease: "easeInOut" }}
-                            className="text-sm font-medium text-gray-400 whitespace-nowrap"
-                          >
-                            {placeholderTexts[currentPlaceholderIndex]}
-                          </motion.span>
-                        </AnimatePresence>
-                      </div>
-                    )}
-                  </div>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-gray-600 rounded transition-colors"
-                    aria-label="Voice search"
-                  >
-                    <Mic className="w-4 h-4 text-gray-300" />
-                  </motion.button>
-                </motion.div>
-                
-                {/* Wallet Icon */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-full"
+              >
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+                  <Search className="w-5 h-5 text-gray-500" />
+                </div>
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    className="w-full pl-10 pr-12 py-2.5 bg-gray-700 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm font-medium text-white placeholder:text-transparent"
+                  />
+                  {/* Animated placeholder overlay - only show when input is empty */}
+                  {!searchValue && (
+                    <div className="absolute left-10 top-1/2 -translate-y-1/2 pointer-events-none flex items-center gap-1 overflow-hidden">
+                      <span className="text-sm font-medium text-gray-400">Search</span>
+                      <AnimatePresence mode="wait">
+                        <motion.span
+                          key={currentPlaceholderIndex}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
+                          className="text-sm font-medium text-gray-400 whitespace-nowrap"
+                        >
+                          {placeholderTexts[currentPlaceholderIndex]}
+                        </motion.span>
+                      </AnimatePresence>
+                    </div>
+                  )}
+                </div>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
-                  className="p-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors"
-                  aria-label="Wallet"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-gray-600 rounded transition-colors"
+                  aria-label="Voice search"
                 >
-                  <Wallet className="w-5 h-5 text-white" />
+                  <Mic className="w-4 h-4 text-gray-300" />
                 </motion.button>
-                
-                {/* Profile Icon */}
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
-                  aria-label="Profile"
-                >
-                  <User className="w-5 h-5 text-white" />
-                </motion.button>
-              </div>
+              </motion.div>
             </section>
 
             {/* Categories - Icons in dark circular backgrounds */}
             <section className="pb-4">
-              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              <div className="flex gap-1 overflow-x-auto scrollbar-hide pb-1">
                 {categories.map((category, index) => {
                   const IconComponent = category.icon;
                   return (
@@ -658,7 +638,7 @@ export default function AppHome() {
           </div>
 
           <div className="relative z-10">
-            {/* Featured Products - Compact Scrollable List */}
+            {/* Featured Products - Simple Product Image with Price */}
             <section className="py-4">
               <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
                 {featuredProducts.map((product, index) => {
@@ -670,38 +650,30 @@ export default function AppHome() {
                     return `₹${price}`;
                   };
 
+                  // Calculate discounted price
+                  const discountedPrice = product.discount
+                    ? Math.round((parseFloat(product.price) / 100) * (100 - product.discount))
+                    : parseFloat(product.price) / 100;
+
                   return (
                     <Link
                       key={product.id}
                       to={`/app/product/${product.id}`}
-                      className={`shrink-0 flex flex-col gap-1.5 cursor-pointer group ${index === 0 ? 'pl-4' : ''} ${index === featuredProducts.length - 1 ? 'pr-4' : ''}`}
+                      className={`shrink-0 flex flex-col cursor-pointer group ${index === 0 ? 'pl-4' : ''} ${index === featuredProducts.length - 1 ? 'pr-4' : ''}`}
                     >
-                      <div className="relative w-28 h-28 bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:scale-105">
+                      {/* Product Image with Light Orange Background */}
+                      <div className="relative w-24 h-28 bg-orange-100 overflow-hidden rounded-xl">
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="w-full h-full object-cover p-2"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
-                        {product.discount && (
-                          <div className="absolute top-1 left-1 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
-                            {product.discount}% OFF
-                          </div>
-                        )}
                       </div>
-                      <div className="flex flex-col gap-0.5 max-w-[112px]">
-                        <h3 className="text-xs font-semibold text-gray-900 line-clamp-2 leading-tight group-hover:text-orange-600 transition-colors">
-                          {product.name}
-                        </h3>
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="text-sm font-bold text-gray-900">
-                            {formatPrice(product.price)}
-                          </span>
-                          {product.originalPrice && product.originalPrice !== product.price && (
-                            <span className="text-[10px] text-gray-500 line-through">
-                              {formatPrice(product.originalPrice)}
-                            </span>
-                          )}
-                        </div>
+                      {/* Light Orange Price Banner */}
+                      <div className="bg-orange-400 px-2 py-1 rounded-b-xl">
+                        <p className="text-white text-[10px] font-bold text-center">
+                          {product.discount ? `Just ${formatPrice(String(discountedPrice * 100))}` : `Spl. price ${formatPrice(product.price)}`}
+                        </p>
                       </div>
                     </Link>
                   );
